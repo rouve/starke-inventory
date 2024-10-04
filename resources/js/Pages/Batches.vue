@@ -25,6 +25,7 @@
         <div class="row mb-3 justify-content-center">
             <button @click="getBatches" class="btn btn-secondary btn-sm shadow-sm col-10"><i class="bi bi-arrow-clockwise"></i> Refresh</button>
         </div>
+        <validation-errors :errors></validation-errors>
         <div v-if="batches.total" class="row mb-3">
             <div class="table-responsive">
                 <table class="table table-striped table-sm">
@@ -71,13 +72,16 @@
 
 <script>
     import router from "../router.js";
+    import ValidationErrors from "../ValidationErrors.vue";
 
     export default {
         name: 'Batches',
+        components: {ValidationErrors},
         data (){
             return {
                 batch: [],
                 batches: [],
+                errors: [],
                 loading: false,
             }
         },
@@ -86,6 +90,8 @@
         },
         methods:{
             async getBatches(){
+                this.clearErrors()
+
                 this.loading = true
 
                 await axios.get('/api/batches').then((res) => {
@@ -95,6 +101,8 @@
                 this.loading = false
             },
             async createBatch(){
+                this.clearErrors()
+
                 await axios.post('/api/batches', {
                     name: this.batch.name,
                     company_name: this.batch.company_name,
@@ -106,6 +114,8 @@
                 }).then(() => {
                     this.getBatches()
                     this.batch = []
+                }).catch(err => {
+                    this.errors.push(err.response.data.message)
                 })
             },
             destroyBatch(id){
@@ -116,14 +126,19 @@
                 }
             },
             handleFileChanges(e){
-                this.batch.file = e.target.files[0];
+                const file = e.target.files[0]
+                if(file) this.batch.file = file
+                e.target.value = null
             },
             openDispatch(id){
                 router.push('batches/'+id+'/dispatch');
             },
             openItemsOut(id){
                 router.push('batches/'+id+'/items-out');
-            }
+            },
+            clearErrors(){
+                this.errors = []
+            },
         }
     }
 </script>

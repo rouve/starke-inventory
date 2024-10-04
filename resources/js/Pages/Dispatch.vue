@@ -15,6 +15,7 @@
                 <button @click="updateCount" class="btn btn-primary btn-sm btn-primary shadow-sm">Create</button>
             </div>
         </div>
+        <validation-errors :errors></validation-errors>
         <div class="row mb-3">
             <div v-if="batch.items" class="table-responsive">
                 <table class="table table-sm table-striped">
@@ -41,13 +42,17 @@
 </template>
 
 <script>
+import ValidationErrors from "../ValidationErrors.vue";
+
 export default {
     name: 'Dispatch',
+    components: {ValidationErrors},
     data() {
         return {
             batchId: null,
             item: [],
-            batch: []
+            batch: [],
+            errors: []
         }
     },
     mounted() {
@@ -58,18 +63,28 @@ export default {
         async getBatch(){
             await axios.get('/api/batches/' + this.batchId).then(res => {
                 this.batch = res.data
+            }).catch(err => {
+                this.errors.push(err.response.data.message)
             })
         },
         async updateCount(){
+            this.clearErrors()
+
             await axios.put('/api/batches/'+this.batchId+'/items/'+this.item.item_no+'/dispatch', {
+                item_no: this.item.item_no,
                 count: this.item.count
+            }).catch(err => {
+                this.errors.push(err.response.data.message)
             })
 
             await this.getBatch()
 
             this.item = []
             document.getElementById('batch-item-no').focus()
-        }
+        },
+        clearErrors(){
+            this.errors = []
+        },
     }
 }
 </script>
