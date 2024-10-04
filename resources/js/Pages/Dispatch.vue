@@ -73,6 +73,8 @@ export default {
             await axios.put('/api/batches/'+this.batchId+'/items/'+this.item.item_no+'/dispatch', {
                 item_no: this.item.item_no,
                 count: this.item.count
+            }).then(res => {
+                if(res.data === 0) this.errors.push('Invalid Item')
             }).catch(err => {
                 this.errors.push(err.response.data.message)
             })
