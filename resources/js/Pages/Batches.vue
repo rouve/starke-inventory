@@ -32,12 +32,15 @@
                     <thead class="thead-light">
                         <tr>
                             <th scope="col">Name</th>
+                            <th scope="col">Company</th>
                             <th scope="col" colspan="2">Progress</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for="batch in batches.data">
                             <td class="align-middle">{{ batch.name }}</td>
+                            <td v-if="batch.company_name" class="align-middle">{{ batch.company_name }}</td>
+                            <td v-else>-</td>
                             <td>
                                 <div class="multi-step checked">
                                     <ul class="multi-step-list">
