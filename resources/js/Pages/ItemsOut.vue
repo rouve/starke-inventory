@@ -4,7 +4,7 @@
         <div class="row">
             <h3 class="h3">Items Out</h3>
         </div>
-        <span v-if="batch.items.length" class="text-muted">{{batch.company_name}}</span>
+        <span v-if="batch.items" class="text-muted">{{batch.company_name}}</span>
         <div class="row mb-3">
             <div class="col-md-3 mb-2">
                 <input v-model="item.item_no" id="batch-item-no" class="form-control form-control-sm shadow-sm" type="text" placeholder="Item no." required autofocus="autofocus" inputmode="none">
