@@ -21,6 +21,6 @@ Route::middleware(['auth', 'web'])->group(function () {
 
     Route::get('/batches/{batch}/items', [BatchItemController::class, 'index']);
 
-    Route::put('/batches/{batch}/items/{item}/dispatch', [BatchItemDispatchController::class, 'update']);
-    Route::put('/batches/{batch}/items/{item}/items-out', [BatchItemItemsOutController::class, 'update']);
+    Route::put('/batches/{batch}/dispatch', [BatchItemDispatchController::class, 'update']);
+    Route::put('/batches/{batch}/items-out', [BatchItemItemsOutController::class, 'update']);
 });

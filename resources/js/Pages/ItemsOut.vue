@@ -24,6 +24,7 @@
                     <tr>
                         <th scope="col">No.</th>
                         <th scope="col">Name</th>
+                        <th scope="col">Quantity</th>
                         <th scope="col">Scanned Quantity</th>
                         <th scope="col">Variance</th>
                     </tr>
@@ -32,6 +33,7 @@
                     <tr v-for="item in batch.items" :class="(item.count_1 === item.count_2) ? 'table-success' : (item.count_2 && item.count_1 !== item.count_2) ? 'table-danger' : 'table-warning'">
                         <td>{{ item.item_no }}</td>
                         <td>{{ item.name }}</td>
+                        <td>{{ item.quantity }}</td>
                         <td>{{ item.count_2 }}</td>
                         <td>{{ (item.count_2 && item.count_1 !== item.count_2) ? item.count_1 - item.count_2 : '' }}</td>
                     </tr>
@@ -69,7 +71,7 @@ export default {
         async updateCount() {
             this.clearErrors()
 
-            await axios.put('/api/batches/' + this.batchId + '/items/' + this.item.item_no + '/items-out', {
+            await axios.put('/api/batches/' + this.batchId + '/items-out', {
                 item_no: this.item.item_no,
                 count: this.item.count
             }).then(res => {
