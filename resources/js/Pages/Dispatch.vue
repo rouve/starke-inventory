@@ -1,9 +1,10 @@
 <template>
     <div class="container-fluid mt-3">
         <button @click="$router.back()" class="btn btn-sm btn-secondary mb-3">Back</button>
-        <div class="row mb-3">
+        <div class="row">
             <h3 class="h3">Dispatch</h3>
         </div>
+        <span v-if="batch.items.length" class="text-muted">{{batch.company_name}}</span>
         <div class="row mb-3">
             <div class="col-md-3 mb-2">
                 <input v-model="item.item_no" id="batch-item-no" class="form-control form-control-sm shadow-sm" type="text" placeholder="Item no." required autofocus="autofocus" inputmode="none">
