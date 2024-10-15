@@ -23,9 +23,13 @@ class BatchItemDispatchController extends Controller
 
         $exploded = explode('/', request()->get('item_no'));
 
-        return $batch->items()->where('item_no', $exploded[1])->update([
-            'count_1_user_id' => $user->id,
-            'count_1' => request()->get('count')
-        ]);
+        if(isset($exploded[1])){
+            return $batch->items()->where('item_no', $exploded[1])->update([
+                'count_1_user_id' => $user->id,
+                'count_1' => request()->get('count')
+            ]);
+        }
+
+        return 0;
     }
 }
