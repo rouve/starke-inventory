@@ -58,9 +58,9 @@ export default {
             errors: []
         }
     },
-    mounted() {
+    async mounted() {
         this.batchId = this.$route.params.id;
-        this.getBatch()
+        await this.getBatch()
     },
     methods: {
         async getBatch() {

@@ -17,11 +17,6 @@
                 <button @click="createBatch" class="btn btn-primary btn-sm btn-primary shadow-sm">Create</button>
             </div>
         </div>
-        <div v-if="loading" class="row mb-3">
-            <div class="spinner-grow spinner-grow-sm" role="status">
-                <span class="visually-hidden">Loading...</span>
-            </div>
-        </div>
         <div class="row mb-3 justify-content-center">
             <button @click="getBatches" class="btn btn-secondary btn-sm shadow-sm col-10"><i class="bi bi-arrow-clockwise"></i> Refresh</button>
         </div>
@@ -67,6 +62,9 @@
                 </table>
             </div>
         </div>
+        <div v-else-if="loading" class="spinner-grow spinner-grow-sm mb-3" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
         <div v-else-if="!loading && !batches.length" class="row">
             <span class="text-muted">No Batches Created</span>
         </div>
@@ -88,14 +86,15 @@
                 loading: false,
             }
         },
-        mounted(){
-            this.getBatches()
+        async mounted(){
+            await this.getBatches()
         },
         methods:{
             async getBatches(){
                 this.clearErrors()
 
                 this.loading = true
+                this.batches = []
 
                 await axios.get('/api/batches').then((res) => {
                     this.batches = res.data;
