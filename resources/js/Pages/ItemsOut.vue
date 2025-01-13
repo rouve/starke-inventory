@@ -31,7 +31,7 @@
                         <td>{{ item.item_no }}</td>
                         <td>{{ item.name }}</td>
                         <td>{{ item.quantity }}</td>
-                        <td>{{ item.count_2 }}</td>
+                        <td>{{ item.count_2 }} <a @click="deleteCount(item.item_no)" v-if="item.count_2 > 0" href="#" class="link-dark">clear</a></td>
                         <td>{{ (item.count_2 && item.count_1 !== item.count_2) ? item.count_1 - item.count_2 : '' }}</td>
                     </tr>
                     </tbody>
@@ -80,6 +80,16 @@ export default {
 
             this.item = []
             document.getElementById('batch-item-no').focus()
+        },
+        async deleteCount(item_no){
+            if(confirm("Are you sure you would like to reset count?")) {
+                await axios.delete('/api/batches/' + this.batchId + '/dispatch', {
+                    params: {
+                        item_no: item_no
+                    }
+                })
+                await this.getBatch()
+            }
         },
         clearErrors(){
             this.errors = []

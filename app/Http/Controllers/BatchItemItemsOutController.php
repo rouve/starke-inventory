@@ -33,4 +33,19 @@ class BatchItemItemsOutController extends Controller
 
         return 0;
     }
+
+    public function destroy(Batch $batch): int
+    {
+        request()->validate([
+            'item_no' => 'required|string|max:255',
+        ]);
+
+        $batchItem = $batch->items()->where('item_no', request('item_no'))->first();
+
+        if($batchItem){
+            return $batchItem->update([
+                'count_2' => 0
+            ]);
+        }
+    }
 }

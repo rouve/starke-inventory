@@ -24,6 +24,7 @@
                         <th scope="col">Quantity</th>
                         <th scope="col">Scanned Quantity</th>
                         <th scope="col">Variance</th>
+                        <th scope="col">-</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -31,7 +32,7 @@
                         <td>{{ item.item_no }}</td>
                         <td>{{ item.name }}</td>
                         <td>{{ item.quantity }}</td>
-                        <td>{{ item.count_1 }}</td>
+                        <td>{{ item.count_1 }} <a @click="deleteCount(item.item_no)" v-if="item.count_1 > 0" href="#" class="link-dark">clear</a></td>
                         <td>{{ (item.count_1 && item.count_1 !== item.quantity) ? item.count_1 - item.quantity : '' }}</td>
                     </tr>
                     </tbody>
@@ -43,6 +44,7 @@
 
 <script>
 import ValidationErrors from "../ValidationErrors.vue";
+import data from "bootstrap/js/src/dom/data.js";
 
 export default {
     name: 'Dispatch',
@@ -82,6 +84,17 @@ export default {
 
             this.item = []
             document.getElementById('batch-item-no').focus()
+        },
+        async deleteCount(item_no){
+            if(confirm("Are you sure you would like to reset count?")) {
+                await axios.delete('/api/batches/' + this.batchId + '/dispatch', {
+                    params: {
+                        item_no: item_no
+                    }
+                })
+
+                await this.getBatch()
+            }
         },
         clearErrors(){
             this.errors = []

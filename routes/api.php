@@ -23,4 +23,7 @@ Route::middleware(['auth', 'web'])->group(function () {
 
     Route::put('/batches/{batch}/dispatch', [BatchItemDispatchController::class, 'update']);
     Route::put('/batches/{batch}/items-out', [BatchItemItemsOutController::class, 'update']);
+
+    Route::delete('/batches/{batch}/dispatch', [BatchItemDispatchController::class, 'destroy']);
+    Route::delete('/batches/{batch}/items-out', [BatchItemItemsOutController::class, 'destroy']);
 });
