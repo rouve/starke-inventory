@@ -10,9 +10,6 @@
                 <input v-model="item.item_no" id="batch-item-no" class="form-control form-control-sm shadow-sm" type="text" placeholder="Item no." required autofocus="autofocus" inputmode="none">
             </div>
             <div class="col-md-3 mb-2">
-                <input v-model="item.count" id="batch-item-quantity"  class="form-control form-control-sm shadow-sm" type="number" placeholder="Quantity" required>
-            </div>
-            <div class="col-md-3 mb-2">
                 <button @click="updateCount" class="btn btn-primary btn-sm btn-primary shadow-sm">Create</button>
             </div>
         </div>
@@ -73,7 +70,6 @@ export default {
 
             await axios.put('/api/batches/' + this.batchId + '/items-out', {
                 item_no: this.item.item_no,
-                count: this.item.count
             }).then(res => {
                 if(res.data === 0) this.errors.push('Invalid Item')
             }).catch(err => {

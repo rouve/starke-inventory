@@ -16,7 +16,6 @@ class BatchItemItemsOutController extends Controller
     {
         request()->validate([
             'item_no' => 'required|string|max:255',
-            'count' => 'required|integer|min:1',
         ]);
 
         $user = auth()->user();
@@ -24,9 +23,11 @@ class BatchItemItemsOutController extends Controller
         $exploded = explode('/', request()->get('item_no'));
 
         if(isset($exploded[1])){
-            return $batch->items()->where('item_no', $exploded[1])->update([
-                'count_2_user_id' => $user->id,
-                'count_2' => request()->get('count')
+            $batchItem = $batch->items()->where('item_no', $exploded[1])->first();
+
+            return $batchItem->update([
+                'count_1_user_id' => $user->id,
+                'count_1' => $batchItem->count_1 + 1,
             ]);
         }
 
