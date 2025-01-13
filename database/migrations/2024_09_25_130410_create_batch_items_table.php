@@ -30,8 +30,8 @@ return new class extends Migration
             $table->string('notes')->nullable();
             $table->integer('long_side')->nullable();
             $table->string('material')->nullable();
-            $table->integer('count_1')->nullable();
-            $table->integer('count_2')->nullable();
+            $table->integer('count_1')->default(0);
+            $table->integer('count_2')->default(0);
             $table->integer('variance')->nullable();
             $table->unsignedBigInteger('count_1_user_id')->nullable();
             $table->foreign('count_1_user_id')->references('id')->on('users')->cascadeOnDelete();
