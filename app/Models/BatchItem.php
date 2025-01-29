@@ -15,18 +15,4 @@ class BatchItem extends Model
     {
         return $this->belongsTo(Batch::class);
     }
-
-    public function scopeNoSecondCount($query){
-        return $query->where(function ($query){
-            $query->whereIsNull('count_2');
-            $query->whereIsNull('count_2_user_id');
-        });
-    }
-
-    public function scopeNotCounted($query){
-        return $query->where(function ($query){
-            $query->whereIsNull('count_1');
-            $query->whereIsNull('count_2');
-        });
-    }
 }

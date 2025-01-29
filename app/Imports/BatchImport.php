@@ -45,9 +45,4 @@ class BatchImport implements ToModel, WithHeadingRow
     {
         return 2;
     }
-
-//    public function uniqueBy(): array
-//    {
-//        return ['batch_id', 'item_no'];
-//    }
 }
