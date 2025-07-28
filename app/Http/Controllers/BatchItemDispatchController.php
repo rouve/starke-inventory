@@ -34,7 +34,7 @@ class BatchItemDispatchController extends Controller
         return 0;
     }
 
-    public function destroy(Batch $batch): int
+    public function destroy(Batch $batch): int|bool
     {
         request()->validate([
             'item_no' => 'required|string|max:255',
@@ -47,5 +47,7 @@ class BatchItemDispatchController extends Controller
                 'count_1' => 0
             ]);
         }
+
+        return false;
     }
 }
